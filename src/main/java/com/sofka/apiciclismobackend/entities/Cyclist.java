@@ -1,11 +1,15 @@
 package com.sofka.apiciclismobackend.entities;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
 @Document
+@NoArgsConstructor
+@AllArgsConstructor
 public class Cyclist {
     @Id
     private String id;
@@ -14,14 +18,4 @@ public class Cyclist {
     private Integer numberCompetitor;
     private String nationalityCyclist;
 
-    // Constructors
-    public Cyclist() {}
-
-    public Cyclist(String id, String idTeam, String nameCyclist, Integer numberCompetitor, String nationalityCyclist) {
-        this.id = id;
-        this.idTeam = idTeam;
-        this.nameCyclist = nameCyclist;
-        this.numberCompetitor = numberCompetitor;
-        this.nationalityCyclist = nationalityCyclist;
-    }
 }
