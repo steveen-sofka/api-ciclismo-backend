@@ -1,12 +1,16 @@
 package com.sofka.apiciclismobackend.models;
 
 import com.sofka.apiciclismobackend.entities.Cyclist;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 
 import java.util.List;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class TeamDTO {
 
     @Id
@@ -16,15 +20,5 @@ public class TeamDTO {
     private String countryTeam;
     private List<Cyclist> cyclistList;
 
-    // Constructors
 
-    public TeamDTO(){}
-
-    public TeamDTO(String id, String nameTeam, String codeTeam, String countryTeam, List<Cyclist> cyclistList) {
-        this.id = id;
-        this.nameTeam = nameTeam;
-        this.codeTeam = codeTeam;
-        this.countryTeam = countryTeam;
-        this.cyclistList = cyclistList;
-    }
 }
