@@ -13,7 +13,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Cyclist {
     @Id
     private String id;
-    private String idTeam;
     private String nameCyclist;
     private Integer numberCompetitor;
     private String nationalityCyclist;

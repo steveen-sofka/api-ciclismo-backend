@@ -28,4 +28,5 @@ public class GetTeamUseCase implements Function<String, Mono<TeamDTO>> {
         return teamRepository.findById(id)
                 .map(mappers.mapperEntityToTeamDto());
     }
+
 }

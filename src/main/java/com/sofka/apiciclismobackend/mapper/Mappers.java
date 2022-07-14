@@ -4,8 +4,6 @@ import com.sofka.apiciclismobackend.entities.Cyclist;
 import com.sofka.apiciclismobackend.entities.Team;
 import com.sofka.apiciclismobackend.models.CyclistDTO;
 import com.sofka.apiciclismobackend.models.TeamDTO;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
 import java.util.function.Function;
@@ -42,7 +40,6 @@ public class Mappers {
         return updateCyclist -> {
             var cyclist = new Cyclist();
             cyclist.setId(updateCyclist.getId());
-            cyclist.setIdTeam(updateCyclist.getIdTeam());
             cyclist.setNameCyclist(updateCyclist.getNameCyclist());
             cyclist.setNumberCompetitor(updateCyclist.getNumberCompetitor());
             cyclist.setNationalityCyclist(updateCyclist.getNationalityCyclist());
@@ -54,7 +51,6 @@ public class Mappers {
     public Function<Cyclist, CyclistDTO> mapperEntityToCyclisDto(){
         return entity ->  new CyclistDTO(
                 entity.getId(),
-                entity.getIdTeam(),
                 entity.getNameCyclist(),
                 entity.getNumberCompetitor(),
                 entity.getNationalityCyclist()
