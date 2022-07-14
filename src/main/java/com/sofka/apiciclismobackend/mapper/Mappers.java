@@ -4,6 +4,7 @@ import com.sofka.apiciclismobackend.entities.Cyclist;
 import com.sofka.apiciclismobackend.entities.Team;
 import com.sofka.apiciclismobackend.models.CyclistDTO;
 import com.sofka.apiciclismobackend.models.TeamDTO;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
