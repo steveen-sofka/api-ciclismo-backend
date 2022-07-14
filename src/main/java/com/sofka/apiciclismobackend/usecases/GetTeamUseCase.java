@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 import reactor.core.publisher.Mono;
 
+import java.util.Objects;
 import java.util.function.Function;
 
 @Service
@@ -27,6 +28,11 @@ public class GetTeamUseCase implements Function<String, Mono<TeamDTO>> {
     public Mono<TeamDTO> apply(String id) {
         return teamRepository.findById(id)
                 .map(mappers.mapperEntityToTeamDto());
+    }
+
+    public Mono<Void> deleteTeam(String id) {
+        Objects.requireNonNull(id, "Id is required");
+        return teamRepository.deleteById(id);
     }
 
 }

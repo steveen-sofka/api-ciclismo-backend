@@ -62,6 +62,17 @@ public class ManagerRouter {
         );
     }
 
+    // Eliminar team por ID
+    @Bean
+    public RouterFunction<ServerResponse> deleteTeamByID(GetTeamUseCase getTeamUseCase){
+        return route(DELETE("team/{id}").and(accept(MediaType.APPLICATION_JSON)),
+                request -> ServerResponse.accepted()
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(BodyInserters.fromPublisher(
+                                getTeamUseCase.deleteTeam(request.pathVariable("id")),Void.class))
+        );
+    }
+
     // Agregar Ciclista al team por id
     @Bean
     public RouterFunction<ServerResponse> addCyclist(CreatedCyclistUseCase createdCyclistUseCase) {
