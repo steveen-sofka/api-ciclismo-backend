@@ -11,12 +11,7 @@ import org.springframework.data.annotation.Id;
 public class CyclistDTO {
     @Id
     private String id;
-    private String idTeam;
     private String nameCyclist;
     private Integer numberCompetitor;
     private String nationalityCyclist;
-
-    // Constructors
-
-
 }

@@ -30,4 +30,6 @@ public class CreatedTeamUseCase implements AddTeam {
                 teamDTO.getCyclistList());
         return teamRepository.save(team);
     }
+
+
 }

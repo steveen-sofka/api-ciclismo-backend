@@ -1,6 +1,9 @@
 package com.sofka.apiciclismobackend.routers;
 
+import com.sofka.apiciclismobackend.entities.Cyclist;
+import com.sofka.apiciclismobackend.models.CyclistDTO;
 import com.sofka.apiciclismobackend.models.TeamDTO;
+import com.sofka.apiciclismobackend.usecases.CreatedCyclistUseCase;
 import com.sofka.apiciclismobackend.usecases.CreatedTeamUseCase;
 import com.sofka.apiciclismobackend.usecases.GetTeamUseCase;
 import com.sofka.apiciclismobackend.usecases.GetTeamsUseCase;
@@ -47,7 +50,7 @@ public class ManagerRouter {
                             TeamDTO.class)));
     }
 
-    // Obtener un team por
+    // Obtener un team por ID
     @Bean
     public RouterFunction<ServerResponse> getTeamByID(GetTeamUseCase getTeamUseCase){
         return route(GET("team/{id}").and(accept(MediaType.APPLICATION_JSON)),
@@ -59,4 +62,19 @@ public class ManagerRouter {
         );
     }
 
+    // Agregar Ciclista al team por id
+    @Bean
+    public RouterFunction<ServerResponse> addCyclist(CreatedCyclistUseCase createdCyclistUseCase) {
+        return route(
+                PUT("/team/{id}").and(accept(MediaType.APPLICATION_JSON)),
+                request -> {
+                    String idTeam = request.pathVariable("id");
+                    Mono<CyclistDTO> cyclistDTOMono =  request.bodyToMono(CyclistDTO.class);
+                    return cyclistDTOMono.flatMap(cyclistDTO ->
+                                    createdCyclistUseCase.addCyclist(cyclistDTO, idTeam))
+                                    .flatMap(result -> ServerResponse.ok()
+                                            .contentType(MediaType.APPLICATION_JSON)
+                                            .bodyValue(result));
+                });
+    }
 }
