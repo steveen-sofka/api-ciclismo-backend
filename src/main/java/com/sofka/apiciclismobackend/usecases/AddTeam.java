@@ -5,7 +5,9 @@ import com.sofka.apiciclismobackend.models.TeamDTO;
 import org.springframework.validation.annotation.Validated;
 import reactor.core.publisher.Mono;
 
+import javax.validation.Valid;
+
 @FunctionalInterface
 public interface AddTeam {
-    Mono<Team> apply(@Validated TeamDTO teamDTO);
+    Mono<Team> apply(@Valid TeamDTO teamDTO);
 }

@@ -7,6 +7,8 @@ import com.sofka.apiciclismobackend.repository.TeamRepository;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
+import java.util.ArrayList;
+
 @Service
 public class CreatedTeamUseCase implements AddTeam {
 
@@ -20,7 +22,12 @@ public class CreatedTeamUseCase implements AddTeam {
 
     @Override
     public Mono<Team> apply(TeamDTO teamDTO) {
-        Team team = new Team();
+        Team team = new Team(
+                teamDTO.getId(),
+                teamDTO.getNameTeam(),
+                teamDTO.getCodeTeam(),
+                teamDTO.getCountryTeam(),
+                teamDTO.getCyclistList());
         return teamRepository.save(team);
     }
 }

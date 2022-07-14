@@ -8,12 +8,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.BodyInserters;
-
 import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
-
-
 import java.util.function.Function;
 
 import static org.springframework.web.reactive.function.server.RequestPredicates.*;
@@ -24,7 +21,8 @@ public class ManagerRouter {
 
     // guardar Team
     @Bean
-    public RouterFunction<ServerResponse> AddTeam(CreatedTeamUseCase createdTeamUseCase){
+    public RouterFunction<ServerResponse> addTeam(CreatedTeamUseCase createdTeamUseCase){
+
         Function<TeamDTO, Mono<ServerResponse>> executor = TeamDTO -> createdTeamUseCase
                 .apply(TeamDTO)
                 .flatMap(result -> ServerResponse.ok()
@@ -32,7 +30,9 @@ public class ManagerRouter {
                         .bodyValue(result));
         return route(
                 POST("/team").and(accept(MediaType.APPLICATION_JSON)),
-                request -> request.bodyToMono(TeamDTO.class).flatMap(executor)
+                request -> request
+                        .bodyToMono(TeamDTO.class)
+                        .flatMap(executor)
         );
 
     }
@@ -47,6 +47,16 @@ public class ManagerRouter {
                             TeamDTO.class)));
     }
 
-
+    // Obtener un team por
+    @Bean
+    public RouterFunction<ServerResponse> getTeamByID(GetTeamUseCase getTeamUseCase){
+        return route(GET("team/{id}").and(accept(MediaType.APPLICATION_JSON)),
+                    request -> ServerResponse.ok()
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .body(BodyInserters.fromPublisher(getTeamUseCase.apply(
+                                    request.pathVariable("id")),
+                                    TeamDTO.class))
+        );
+    }
 
 }
