@@ -20,5 +20,4 @@ public class TeamDTO {
     private String countryTeam;
     private List<Cyclist> cyclistList;
 
-
 }
