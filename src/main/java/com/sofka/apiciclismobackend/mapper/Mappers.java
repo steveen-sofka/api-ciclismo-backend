@@ -14,13 +14,18 @@ public class Mappers {
     // Mapper de TeamDTO a Team Entidad
     public Function<TeamDTO, Team> mapperTeamDtoToEntity(){
         return updateTeam -> {
-            var team = new Team();
-            team.setId(updateTeam.getId());
-            team.setNameTeam(updateTeam.getNameTeam());
-            team.setCodeTeam(updateTeam.getCodeTeam());
-            team.setCountryTeam(updateTeam.getCountryTeam());
-            team.setCyclistList(updateTeam.getCyclistList());
-            return team;
+            if (updateTeam.getCodeTeam().length() == 3) {
+                var team = new Team();
+                team.setId(updateTeam.getId());
+                team.setNameTeam(updateTeam.getNameTeam());
+                team.setCodeTeam(updateTeam.getCodeTeam());
+                team.setCountryTeam(updateTeam.getCountryTeam());
+                team.setCyclistList(updateTeam.getCyclistList());
+                return team;
+            } else {
+                System.out.println("Solo se permiten codeTeam de 3 dígitos");
+            }
+            return null;
         };
     }
 

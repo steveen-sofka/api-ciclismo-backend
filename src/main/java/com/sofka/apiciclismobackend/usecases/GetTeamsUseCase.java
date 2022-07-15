@@ -1,5 +1,6 @@
 package com.sofka.apiciclismobackend.usecases;
 
+import com.sofka.apiciclismobackend.entities.Cyclist;
 import com.sofka.apiciclismobackend.mapper.Mappers;
 import com.sofka.apiciclismobackend.models.TeamDTO;
 import com.sofka.apiciclismobackend.repository.TeamRepository;
@@ -25,6 +26,18 @@ public class GetTeamsUseCase implements Supplier<Flux<TeamDTO>> {
     @Override
     public Flux<TeamDTO> get() {
         return teamRepository.findAll()
+                .map(mappers.mapperEntityToTeamDto());
+    }
+
+    public Flux<TeamDTO> getCyclistsByCode(String codeTeam) {
+        return teamRepository.findAll()
+                .filter(team -> team.getCodeTeam().equals(codeTeam))
+                .map(mappers.mapperEntityToTeamDto());
+    }
+
+    public Flux<TeamDTO> getTeamByCountry(String countryTeam) {
+        return teamRepository.findAll()
+                .filter(team -> team.getCountryTeam().equals(countryTeam))
                 .map(mappers.mapperEntityToTeamDto());
     }
 }
