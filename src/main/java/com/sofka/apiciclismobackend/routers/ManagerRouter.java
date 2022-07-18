@@ -18,8 +18,8 @@ import static org.springframework.web.reactive.function.server.RouterFunctions.r
 @Configuration
 public class ManagerRouter {
 
-    // ----------------------> CRUD TEAM <-----------
-    // Guardar Team y Actualizar Team
+    // 🟪🟪🟪🟪🟪🟪---> CRUD TEAM <---🟪🟪🟪🟪🟪
+    // Created Team and Update Team ✔
     @Bean
     public RouterFunction<ServerResponse> addTeam(CreatedTeamUseCase createdTeamUseCase){
 
@@ -37,7 +37,7 @@ public class ManagerRouter {
 
     }
 
-    // Obtener un team por ID
+    // Get Team by ID ✔
     @Bean
     public RouterFunction<ServerResponse> getTeamByID(GetTeamUseCase getTeamUseCase){
         return route(GET("team/{id}").and(accept(MediaType.APPLICATION_JSON)),
@@ -49,7 +49,7 @@ public class ManagerRouter {
         );
     }
 
-    // obtener todos los teams
+    // Get all teams ✔
     @Bean
     public RouterFunction<ServerResponse> getTeams(GetTeamsUseCase getTeamsUseCase){
         return route(GET("/teams"),
@@ -58,7 +58,7 @@ public class ManagerRouter {
                         .body(BodyInserters.fromPublisher(getTeamsUseCase.get(),
                                 TeamDTO.class)));
     }
-    // Eliminar team por ID
+    // Delete team by ID ✔
     @Bean
     public RouterFunction<ServerResponse> deleteTeamByID(GetTeamUseCase getTeamUseCase){
         return route(DELETE("team/{id}").and(accept(MediaType.APPLICATION_JSON)),
@@ -69,9 +69,9 @@ public class ManagerRouter {
         );
     }
 
-    // ----------------------> CRUD CYCLIST <-----------
+    // 🟨🟨🟨🟨🟨---> CRUD CYCLIST <---🟨🟨🟨🟨🟨
 
-    // Agregar Ciclista al team por id
+    // Add Cyclist at Team By Id ✔
     @Bean
     public RouterFunction<ServerResponse> addCyclist(CreatedCyclistUseCase createdCyclistUseCase) {
         return route(
@@ -87,7 +87,7 @@ public class ManagerRouter {
                 });
     }
 
-    // Obtener todos los ciclistas
+    // Get All Cyclists ✔
     @Bean
     public RouterFunction<ServerResponse> getCyclists(GetCyclistsUseCase getCyclistsUseCase){
         return route(GET("/cyclists"),
@@ -97,9 +97,32 @@ public class ManagerRouter {
                                 Object.class)));
     }
 
-    // ----------------------> ENDPOINTS PERSONALIZADOS <-----------
+    // Obtener ciclista by id ✔
+    @Bean
+    public RouterFunction<ServerResponse> getCyclistByID(GetCyclistsUseCase getCyclistsUseCase){
+        return route(GET("cyclist/{id}").and(accept(MediaType.APPLICATION_JSON)),
+                request -> ServerResponse.ok()
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(BodyInserters.fromPublisher(getCyclistsUseCase.getCyclistById(
+                                        request.pathVariable("id")),
+                                Object.class))
+        );
+    }
 
-    // -> consultar ciclistas por codigoTeam
+    // Delete Cyclist By Id ❌
+    @Bean
+    public RouterFunction<ServerResponse> deleteCyclistById(GetCyclistsUseCase getCyclistsUseCase){
+        return route(DELETE("cyclist/{id}").and(accept(MediaType.APPLICATION_JSON)),
+                request -> ServerResponse.accepted()
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(BodyInserters.fromPublisher(
+                                getCyclistsUseCase.deleteCyclist(request.pathVariable("id")),Object.class))
+        );
+    }
+
+    // 🟦🟦🟦🟦🟦 ---> ENDPOINTS CUSTOMIZED <--- 🟦🟦🟦🟦🟦
+
+    // Get Cyclists By CodeTeam ✔
     @Bean
     public RouterFunction<ServerResponse> getCyclistsByCodeTeam(GetTeamsUseCase getTeamsUseCase){
         return route(GET("cyclists/{codeTeam}").and(accept(MediaType.APPLICATION_JSON)),
@@ -111,7 +134,7 @@ public class ManagerRouter {
         );
     }
 
-    // consulta de equipos por country
+    // Get Team By Country ✔
     @Bean
     public RouterFunction<ServerResponse> getTeamByCountry(GetTeamsUseCase getTeamsUseCase){
         return route(GET("team/country/{countryTeam}").and(accept(MediaType.APPLICATION_JSON)),
@@ -123,7 +146,7 @@ public class ManagerRouter {
         );
     }
 
-    // consulta de ciclistas por su nationalityCyclist
+    // Get Cyclist By NationalityCyclist
     @Bean
     public RouterFunction<ServerResponse> getCyclistsByNationatily(GetCyclistsUseCase getCyclistsUseCase){
         return route(GET("/cyclist/nationality/{nationality}"),

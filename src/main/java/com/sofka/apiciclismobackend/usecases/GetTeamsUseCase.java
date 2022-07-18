@@ -1,6 +1,5 @@
 package com.sofka.apiciclismobackend.usecases;
 
-import com.sofka.apiciclismobackend.entities.Cyclist;
 import com.sofka.apiciclismobackend.mapper.Mappers;
 import com.sofka.apiciclismobackend.models.TeamDTO;
 import com.sofka.apiciclismobackend.repository.TeamRepository;
